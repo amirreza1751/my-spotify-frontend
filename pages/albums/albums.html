@@ -1,0 +1,44 @@
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Albums</h1>
+            <a href="#!/albums/new" style="color: white"><button class="btn btn-primary pull-right"> Add a new album</button></a>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>genre</th>
+                    <th>N. Tracks</th>
+                    <th>Length</th>
+                    <th>Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="album in albums.content | startFrom:(currentPage-1)*pageSize | limitTo:pageSize">
+                    <td>{{album.id}}</td>
+
+                    <td><img src="{{album.cover}}" style="width: 40px; margin-right: 10px;" alt="">{{album.title}}</td>
+                    <td><img src="{{album.artistPic}}" style="width: 40px; border-radius: 50%; margin-right: 10px;" alt="">{{album.artistName}}</td>
+                    <td>{{album.genre}}</td>
+                    <td>{{album.numberOfTracks}}</td>
+                    <td>{{album.length}}</td>
+                    <td>
+                        <a href="#!/albums/{{album.id}}">
+                            <button class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <ul uib-pagination items-per-page="pageSize" total-items="albums.totalElements" ng-model="currentPage" ng-change="pageChanged()"></ul>
+        </div>
+    </div>
+</div>

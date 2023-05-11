@@ -1,0 +1,19 @@
+<div>
+<!--    <pre>Selected date is: <em>{{dt | date:'dd-mm-yyyy' }}</em></pre>-->
+    <div class="row">
+        <div class="col-md-12">
+            <p class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+            </p>
+        </div>
+    </div>
+<!--    <div class="row">-->
+<!--        <div class="col-md-6">-->
+<!--            <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>-->
+<!--        </div>-->
+<!--    </div>-->
+
+</div>

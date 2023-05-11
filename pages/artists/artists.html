@@ -1,0 +1,35 @@
+<div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Artists</h1>
+            <a href="#!/artists/new" style="color: white"><button class="btn btn-primary pull-right"> Add a new artist</button></a>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Details</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="artist in artists.content | startFrom:(currentPage-1)*pageSize | limitTo:pageSize">
+                    <td>{{artist.id}}</td>
+                    <td><img src="{{artist.profilePicture}}" style="width: 50px; border-radius: 50%; margin-right: 10px;" alt="">{{artist.name}}</td>
+                    <td>
+                        <a href="#!/artists/{{artist.id}}">
+                            <button class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <ul uib-pagination items-per-page="pageSize" total-items="artists.totalElements" ng-model="currentPage" ng-change="pageChanged()"></ul>
+        </div>
+    </div>
+</div>

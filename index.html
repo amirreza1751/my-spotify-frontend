@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en" ng-app="mySpotify">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="custom-style.css">
+    <link rel="stylesheet" href="cropArea.css">
+    <link rel="stylesheet" href="ui-cropper.css">
+    <link rel="stylesheet" href="pages/albums/albums-style.css">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="//code.angularjs.org/1.8.2/angular-route.min.js"></script>
+    <script src="//code.angularjs.org/1.8.2/angular-resource.min.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers.js"></script>
+    <script src="services.js"></script>
+    <script src="routes.js"></script>
+    <script src="//code.angularjs.org/1.8.2/angular-animate.min.js"></script>
+    <script src="//code.angularjs.org/1.8.2/angular-touch.min.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="//code.angularjs.org/1.8.2/angular-sanitize.min.js"></script>
+    <script src="ui-cropper.js"></script>
+    <script src="angular-file-upload.min.js"></script>
+    <script src="directives/date-picker/date-picker.js"></script>
+    <script src="directives/album/album-detail.js"></script>
+    <script src="directives/artist/artist-detail.js"></script>
+    <script src="components/modal/modal-component.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <nav class="nav navbar-default" style=" background-color: #342e2e;">
+            <div style="padding-right: 20px;">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/" style="color: #f5eaea">My Spotify</a>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" style="color: #f5eaea"><i class="fa fa-home"></i> Home</a></li>
+                </ul>
+            </div>
+        </nav>
+
+    </header>
+
+    <div class="row" >
+        <div class="col-md-2" style="background-color: #342e2e;">
+            <ul class="nav nav-stacked nav-pills" ng-controller="navController">
+                <li role="presentation"><a href="#!/">Home</a></li>
+                <li role="presentation" ><a href="#!/artists/">Artists</a></li>
+                <li role="presentation" ><a  href="#!/albums/" >Albums</a></li>
+            </ul>
+        </div>
+        <div class="container">
+            <div class="col-md-9 col-md-offset-1" ng-view></div>
+        </div>
+    </div>
+
+</body>
+</html>

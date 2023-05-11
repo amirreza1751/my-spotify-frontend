@@ -1,0 +1,9 @@
+.row, .col-md-2, html, body {
+    height: 100%;
+}
+.artist-pic {
+    width: 100%;
+    min-height: 100px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

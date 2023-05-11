@@ -1,0 +1,87 @@
+<script type="text/ng-template" id="customTemplate.html">
+    <a>
+        <img ng-src="{{match.model.profilePicture}}" width="16">
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
+<script type="text/ng-template" id="genreTemplate.html">
+    <a>
+        <span ng-bind-html="match.label | uibTypeaheadHighlight:query"></span>
+    </a>
+</script>
+
+<div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h2>Album Details</h2>
+                <div class=" pull-right">
+                    <button type="button" class="btn btn-warning btn-sm" ng-click="onReturnToAlbums()">Cancel</button>
+                    <button type="button" class="btn btn-success btn-sm" ng-click="onUpdate()">Save</button>
+                    <button type="button" class="btn btn-danger btn-sm" ng-click="onDeleteAlbum({id: albumEdit.id})">
+                        Delete Album
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <br>
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <img src="{{albumEdit.cover}}" style="width: 100%" alt="Album Cover">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-picture"></span> </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <label for="albumTitleInput">Album Title:</label>
+                            <input type="text" id="albumTitleInput" class="form-control" ng-model="albumTitleEditInput" >
+                        </div>
+
+                        <div class="form-group">
+                            <label for="albumArtistNameInput">Artist Name:</label>
+                            <input type="text" id="albumArtistNameInput" ng-model="albumArtistSelectedEdit" uib-typeahead="artistInfo as artistInfo.name for artistInfo in artistsInfo | filter:{name:$viewValue}" typeahead-template-url="customTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="albumGenreInput">Genre:</label>
+                            <input type="text" id="albumGenreInput" ng-model="albumGenreSelectedEdit" uib-typeahead="genreInfo as genreInfo.name for genreInfo in genresInfo | filter:{name:$viewValue}" typeahead-template-url="genreTemplate.html" class="form-control" typeahead-show-hint="true" typeahead-min-length="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Release Date:</label>
+                            <date-picker dt="dt" album-date="{{albumEdit.releaseDate}}"></date-picker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>{{albumEdit.title}} Tracks: </h3>
+                <button type="button" class="btn btn-primary pull-right btn-sm" ng-click="openModal()">New Track</button>
+                <br>
+                <br>
+                <br>
+                <div class="table-responsive">
+                    <table class="table">
+                        <tr  ng-repeat="track in albumEdit.tracks">
+                            <td>{{$index + 1}}</td>
+                            <td>{{track.name}}</td>
+                            <td>{{track.duration}}</td>
+                            <td><button ng-click="onEditTrack({id: track.id})" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></td>
+                            <td><button ng-click="onDeleteTrack({id: track.id})" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
+                            <!--                        <td>{{track.path}}</td->-->
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
