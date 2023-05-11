@@ -28,6 +28,19 @@ mySpotify.service('artistService', ['$http', function ($http){
         });
     }
 
+    this.updateArtist = function (id, name){
+        console.log(id, name)
+        let uploadUrl = "http://localhost:8080/api/artists/"+id;
+        return $http.put(uploadUrl,{
+            name: name,
+        }).then(function successCallback(response) {
+            return response;
+        }, function errorCallback(response) {
+            console.log("An error occurred.", response)
+            alert("An error occurred.")
+        });
+    }
+
 }]);
 
 

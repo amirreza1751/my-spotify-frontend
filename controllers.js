@@ -60,6 +60,18 @@ mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$lo
                     });
         }
 
+        $scope.updateArtist = function () {
+            artistService.updateArtist($scope.artist.id, $scope.artistNameEditInput).then(
+                function successCallback(response) {
+                    $location.path("/artists");
+                },
+                function errorCallback(response) {
+                    console.log("An error occurred.", response)
+                    alert("An error occurred.")
+                }
+            );
+        }
+
     }]);
 
 mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$location", "$uibModal", "$route", "albumService", "fileService",
@@ -181,8 +193,6 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
                     console.log("An error occurred.", response)
                     alert("An error occurred.")
                 })
-
-
         }
 
         $scope.onReturnToAlbums = function () {

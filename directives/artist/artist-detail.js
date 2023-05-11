@@ -6,7 +6,8 @@ mySpotify.directive('artistDetail', function () {
         transclude: true,
         scope: {
             artist: "=",
-            artistNameEditInput: "="
+            artistNameEditInput: "=",
+            updateArtist: '&'
         }
     }
 });
