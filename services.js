@@ -41,6 +41,22 @@ mySpotify.service('artistService', ['$http', function ($http){
         });
     }
 
+
+    this.updateArtistProfilePicture = function (artistId, profilePicture) {
+        let uploadUrl = "http://localhost:8080/api/artists/" + artistId + "/profile-picture";
+        let fd = new FormData();
+        fd.append("file", profilePicture)
+        fd.append("id", artistId)
+        return $http.put(uploadUrl, fd,{
+            transformRequest: angular.indentity,
+            headers: {'content-type': undefined, 'Process-Data': false}
+        }).then(function successCallback(response) {
+            return response;
+        }, function errorCallback(response) {
+            console.log("An error occurred.", response)
+            alert("An error occurred.")
+        });
+    }
 }]);
 
 
@@ -141,6 +157,21 @@ mySpotify.service('albumService', ['$http', function ($http){
         });
     }
 
+
+    this.updateTrack = function (id, name, minutes, seconds){
+        let url = "http://localhost:8080/api/tracks/"+id;
+        return $http.put(url,{
+            name: name,
+            minutes: minutes,
+            seconds: seconds
+        }).then(function successCallback(response) {
+            return response;
+        }, function errorCallback(response) {
+            console.log("An error occurred.", response)
+            alert("An error occurred.")
+        });
+    }
+
     this.deleteAlbum = function (id) {
         let url = "http://localhost:8080/api/albums/"+id;
         return $http.delete(url)
@@ -150,6 +181,14 @@ mySpotify.service('albumService', ['$http', function ($http){
                 console.log("An error occurred.", response)
                 alert("An error occurred.")
             });
+    }
+
+    this.getMinutes = function (durationString){
+        return parseInt(durationString.replace("M", "").split(" ")[0]);
+    }
+
+    this.getSeconds = function (durationString){
+        return parseInt(durationString.replace("S", "").split(" ")[1]);
     }
 
 }]);
@@ -168,5 +207,7 @@ mySpotify.service('fileService', [function () {
         }
         return new File([u8arr], filename, {type: mime});
     }
+
+
 
 }]);

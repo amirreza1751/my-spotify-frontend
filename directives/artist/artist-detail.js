@@ -7,7 +7,10 @@ mySpotify.directive('artistDetail', function () {
         scope: {
             artist: "=",
             artistNameEditInput: "=",
-            updateArtist: '&'
+            updateArtist: '&',
+            openUpdateArtistPictureModal: "&",
+            myCroppedImage: "=",
+            myImage: "="
         }
     }
 });

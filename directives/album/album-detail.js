@@ -10,13 +10,19 @@ mySpotify.directive('albumDetail', function () {
             genresInfo : "=",
             dt: "=",
             onUpdate: "&",
-            openModal: "&",
+            openAddTrackModal: "&",
             albumTitleEditInput: "=",
             albumArtistSelectedEdit: "=",
             albumGenreSelectedEdit: "=",
             onDeleteTrack: "&",
+            onUpdateTrack: "&",
             onReturnToAlbums: "&",
-            onDeleteAlbum: "&"
+            onDeleteAlbum: "&",
+            getMinutes: "&",
+            getSeconds: "&",
+            trackNameEditInput: "=",
+            trackMinutesEditInput: "=",
+            trackSecondsEditInput: "=",
         },
         link: function (scope, element, attrs) {
 

@@ -65,7 +65,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <h3>{{albumEdit.title}} Tracks: </h3>
-                <button type="button" class="btn btn-primary pull-right btn-sm" ng-click="openModal()">New Track</button>
+                <button type="button" class="btn btn-primary pull-right btn-sm" ng-click="openAddTrackModal()">New Track</button>
                 <br>
                 <br>
                 <br>
@@ -73,9 +73,16 @@
                     <table class="table">
                         <tr  ng-repeat="track in albumEdit.tracks">
                             <td>{{$index + 1}}</td>
-                            <td>{{track.name}}</td>
-                            <td>{{track.duration}}</td>
-                            <td><button ng-click="onEditTrack({id: track.id})" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></td>
+                            <td>
+                                <input type="text" class="form-control" ng-model="trackNameEditInput" ng-init="trackNameEditInput=track.name" ng-value="track.name" >
+                            </td>
+                            <td>
+                                    <input  type="number" style=" float: left; width: 50%" class="form-control" ng-model="trackMinutesEditInput" ng-init="trackMinutesEditInput=getMinutes({duration: track.duration})" ng-value="getMinutes({duration: track.duration})" min="0">
+                                    <input  type="number" style="float: left; width: 50%" class="form-control" ng-model="trackSecondsEditInput" ng-init="trackSecondsEditInput=getSeconds({duration: track.duration})" ng-value="getSeconds({duration: track.duration})" min="1" max="59">
+
+
+<!--                                {{ getMinutes({duration: track.duration}) }} - {{getSeconds({duration: track.duration})}}</td>-->
+                            <td><button ng-click="onUpdateTrack({id: track.id, name: trackNameEditInput, minutes: trackMinutesEditInput, seconds: trackSecondsEditInput})" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></button></td>
                             <td><button ng-click="onDeleteTrack({id: track.id})" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button></td>
                             <!--                        <td>{{track.path}}</td->-->
                         </tr>

@@ -1,5 +1,5 @@
-mySpotify.component('myModal', {
-    templateUrl: "components/modal/myModal.html",
+mySpotify.component('addTrackModal', {
+    templateUrl: "components/add-track-modal/add-track-modal.html",
     bindings: {
         modalInstance: "<",
         resolve: "<"

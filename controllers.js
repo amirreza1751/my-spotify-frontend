@@ -7,8 +7,8 @@ mySpotify.controller('navController', ["$scope", "$location", function ($scope, 
 
 }]);
 
-mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$location", "$route", "artistService", "fileService",
-    function ($scope, $routeParams, $log, $location, $route, artistService, fileService) {
+mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$location", "$route", "$uibModal", "artistService", "fileService",
+    function ($scope, $routeParams, $log, $location, $route, $uibModal, artistService, fileService) {
         $scope.id = $routeParams.id || 1;
         artistService.getArtists().then(function (list) {
             $scope.artists = list;
@@ -16,6 +16,7 @@ mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$lo
                 return item.id == $scope.id;
             })[0];
             $scope.artistNameEditInput = $scope.artist.name;
+            $scope.dataForUpdateArtistPictureModal = {artist: $scope.artist}
         });
         $scope.currentPage = 1;
         $scope.pageSize = 5;
@@ -35,7 +36,7 @@ mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$lo
             cropHeight: $scope.rectangleHeight
         };
 
-        var handleFileSelect = function (evt) {
+        $scope.handleFileSelect = function (evt) {
             var file = evt.currentTarget.files[0];
             var reader = new FileReader();
             reader.onload = function (evt) {
@@ -45,7 +46,8 @@ mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$lo
             };
             reader.readAsDataURL(file);
         };
-        angular.element(document.querySelector('#fileInput')).on('change', handleFileSelect);
+        angular.element(document.querySelector('#fileInput')).on('change', $scope.handleFileSelect);
+        // angular.element(document.querySelector('#updateArtistPictureInput')).on('change', handleFileSelect);
 
         $scope.onCreate = function () {
             $scope.file = fileService.dataURLtoFile($scope.myCroppedImage, Date.now() + '.jpg');
@@ -58,8 +60,8 @@ mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$lo
                         console.log("An error occurred.", response)
                         alert("An error occurred.")
                     });
-        }
 
+        }
         $scope.updateArtist = function () {
             artistService.updateArtist($scope.artist.id, $scope.artistNameEditInput).then(
                 function successCallback(response) {
@@ -70,7 +72,33 @@ mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$lo
                     alert("An error occurred.")
                 }
             );
+
         }
+
+        $scope.openUpdateArtistPictureModal = function () {
+            var modalInstance = $uibModal.open({
+                component: 'updateArtistPictureModal',
+                resolve: {
+                    modalData: function () {
+                        return {
+                            image: $scope.artist.profilePicture
+                        }
+                    }
+                }
+            });
+            modalInstance.result.then(function (croppedImage) {
+                $scope.artist.imageForEdit = fileService.dataURLtoFile(croppedImage, Date.now() + '.jpg');
+                artistService.updateArtistProfilePicture($scope.artist.id, $scope.artist.imageForEdit).then(function (){
+                    $route.reload();
+                })
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
+        };
+
+
+
+
 
     }]);
 
@@ -136,14 +164,14 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
                     });
         }
 
-        $scope.dataForModal = {}
-        $scope.openModal = function() {
+        $scope.dataForAddTrackModal = {}
+        $scope.openAddTrackModal = function() {
             console.log("openModal")
             $uibModal.open({
-                component: "myModal",
+                component: "AddTrackModal",
                 resolve: {
                     modalData: function() {
-                        return $scope.dataForModal;
+                        return $scope.dataForAddTrackModal;
                     }
                 }
             }).result.then(function(result) {
@@ -183,6 +211,25 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
                     });
         }
 
+        $scope.onUpdateTrack = function (track) {
+            albumService.updateTrack(track.id, track.name, track.minutes, track.seconds)
+                .then(
+                    function successCallback(response) {
+                        console.log("Track updated.")
+                        $route.reload();
+                    },
+                    function errorCallback(response) {
+                        console.log("An error occurred.", response)
+                        alert("An error occurred.")
+                    });
+        }
+        $scope.getMinutes = function (duration){
+            return albumService.getMinutes(duration);
+        }
+        $scope.getSeconds = function (duration){
+            return albumService.getSeconds(duration);
+        }
+
         $scope.onDeleteTrack = function (id) {
             albumService.deleteTrack(id).then(
                 function successCallback(response) {
@@ -196,7 +243,8 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
         }
 
         $scope.onReturnToAlbums = function () {
-            $location.path("/albums");
+            // $location.path("/albums");
+                window.history.back();
         }
 
         $scope.onDeleteAlbum = function (id) {
@@ -210,5 +258,7 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
                     alert("An error occurred.")
                 })
         }
+
+
 
     }]);
