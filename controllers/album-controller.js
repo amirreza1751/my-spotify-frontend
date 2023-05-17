@@ -1,16 +1,17 @@
 mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$location", "$uibModal", "$route", "albumService", "fileService",
     function ($scope, $routeParams, $log, $location, $uibModal, $route, albumService, fileService) {
-        $scope.id = $routeParams.id || 1;
+        $scope.id = $routeParams.id || 0;
         $scope.album = {};
         albumService.getAlbums().then(function (list) {
             $scope.albums = list;
             $scope.album = $scope.albums.content.filter(function (item) {
                 return item.id == $scope.id;
             })[0];
-            console.log($scope.album.cover)
-            $scope.albumArtistSelectedEdit = {id: $scope.album.artistId, name: $scope.album.artistName}
-            $scope.albumGenreSelectedEdit = {name: $scope.album.genre}
-            $scope.albumTitleEditInput = $scope.album.title;
+            if ($scope.id != 0){
+                $scope.albumArtistSelectedEdit = {id: $scope.album.artistId, name: $scope.album.artistName}
+                $scope.albumGenreSelectedEdit = {name: $scope.album.genre}
+                $scope.albumTitleEditInput = $scope.album.title;
+            }
         });
         $scope.currentPage = 1;
         $scope.pageSize = 5;
@@ -72,11 +73,8 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
                     }
                 }
             }).result.then(function(result) {
-                // console.info("I was closed, so do what I need to do myContent's controller now.  Result was->");
                 $scope.oncreateTrack($scope.album.id, result.trackNameInput, result.trackLengthMin, result.trackLengthSec);
-                // console.info(result);
             }, function(reason) {
-                // console.info("I was dimissed, so do what I need to do myContent's controller now.  Reason was->" + reason);
             });
         };
 
@@ -140,7 +138,6 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
         }
 
         $scope.onReturnToAlbums = function () {
-            // $location.path("/albums");
             window.history.back();
         }
 

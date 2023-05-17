@@ -40,7 +40,6 @@ mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$lo
             reader.readAsDataURL(file);
         };
         angular.element(document.querySelector('#fileInput')).on('change', $scope.handleFileSelect);
-        // angular.element(document.querySelector('#updateArtistPictureInput')).on('change', handleFileSelect);
 
         $scope.onCreate = function () {
             $scope.file = fileService.dataURLtoFile($scope.myCroppedImage, Date.now() + '.jpg');
