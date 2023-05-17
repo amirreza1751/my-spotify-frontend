@@ -1,107 +1,3 @@
-// CONTROLLERS
-mySpotify.controller('homeController', function ($scope) {
-
-});
-
-mySpotify.controller('navController', ["$scope", "$location", function ($scope, $location) {
-
-}]);
-
-mySpotify.controller('artistController', ["$scope", "$routeParams", "$log", "$location", "$route", "$uibModal", "artistService", "fileService",
-    function ($scope, $routeParams, $log, $location, $route, $uibModal, artistService, fileService) {
-        $scope.id = $routeParams.id || 1;
-        artistService.getArtists().then(function (list) {
-            $scope.artists = list;
-            $scope.artist = $scope.artists.content.filter(function (item) {
-                return item.id == $scope.id;
-            })[0];
-            $scope.artistNameEditInput = $scope.artist.name;
-            $scope.dataForUpdateArtistPictureModal = {artist: $scope.artist}
-        });
-        $scope.currentPage = 1;
-        $scope.pageSize = 5;
-        $scope.setPage = function (pageNo) {
-            $scope.currentPage = pageNo;
-
-        };
-
-        $scope.myCroppedImage = '';
-        $scope.myImage = '';
-
-        $scope.rectangleWidth = 100;
-        $scope.rectangleHeight = 100;
-
-        $scope.cropper = {
-            cropWidth: $scope.rectangleWidth,
-            cropHeight: $scope.rectangleHeight
-        };
-
-        $scope.handleFileSelect = function (evt) {
-            var file = evt.currentTarget.files[0];
-            var reader = new FileReader();
-            reader.onload = function (evt) {
-                $scope.$apply(function ($scope) {
-                    $scope.myImage = evt.target.result;
-                });
-            };
-            reader.readAsDataURL(file);
-        };
-        angular.element(document.querySelector('#fileInput')).on('change', $scope.handleFileSelect);
-        // angular.element(document.querySelector('#updateArtistPictureInput')).on('change', handleFileSelect);
-
-        $scope.onCreate = function () {
-            $scope.file = fileService.dataURLtoFile($scope.myCroppedImage, Date.now() + '.jpg');
-            artistService.createArtist($scope.artistNameInput, $scope.file)
-                .then(
-                    function successCallback(response) {
-                        $location.path("/artists/" + response.data.id);
-                    },
-                    function errorCallback(response) {
-                        console.log("An error occurred.", response)
-                        alert("An error occurred.")
-                    });
-
-        }
-        $scope.updateArtist = function () {
-            artistService.updateArtist($scope.artist.id, $scope.artistNameEditInput).then(
-                function successCallback(response) {
-                    $location.path("/artists");
-                },
-                function errorCallback(response) {
-                    console.log("An error occurred.", response)
-                    alert("An error occurred.")
-                }
-            );
-
-        }
-
-        $scope.openUpdateArtistPictureModal = function () {
-            var modalInstance = $uibModal.open({
-                component: 'updateArtistPictureModal',
-                resolve: {
-                    modalData: function () {
-                        return {
-                            image: $scope.artist.profilePicture
-                        }
-                    }
-                }
-            });
-            modalInstance.result.then(function (croppedImage) {
-                $scope.artist.imageForEdit = fileService.dataURLtoFile(croppedImage, Date.now() + '.jpg');
-                artistService.updateArtistProfilePicture($scope.artist.id, $scope.artist.imageForEdit).then(function (){
-                    $route.reload();
-                })
-            }, function () {
-                console.log('Modal dismissed at: ' + new Date());
-            });
-        };
-
-
-
-
-
-    }]);
-
 mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$location", "$uibModal", "$route", "albumService", "fileService",
     function ($scope, $routeParams, $log, $location, $uibModal, $route, albumService, fileService) {
         $scope.id = $routeParams.id || 1;
@@ -111,6 +7,7 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
             $scope.album = $scope.albums.content.filter(function (item) {
                 return item.id == $scope.id;
             })[0];
+            console.log($scope.album.cover)
             $scope.albumArtistSelectedEdit = {id: $scope.album.artistId, name: $scope.album.artistName}
             $scope.albumGenreSelectedEdit = {name: $scope.album.genre}
             $scope.albumTitleEditInput = $scope.album.title;
@@ -244,7 +141,7 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
 
         $scope.onReturnToAlbums = function () {
             // $location.path("/albums");
-                window.history.back();
+            window.history.back();
         }
 
         $scope.onDeleteAlbum = function (id) {
@@ -259,6 +156,25 @@ mySpotify.controller('albumController', ["$scope", "$routeParams", "$log", "$loc
                 })
         }
 
-
+        $scope.openUpdateAlbumCoverModal = function () {
+            var modalInstance = $uibModal.open({
+                component: 'updateAlbumCoverModal',
+                resolve: {
+                    modalData: function () {
+                        return {
+                            image: $scope.album.cover
+                        }
+                    }
+                }
+            });
+            modalInstance.result.then(function (croppedImage) {
+                $scope.album.coverForEdit = fileService.dataURLtoFile(croppedImage, Date.now() + '.jpg');
+                albumService.updateAlbumCover($scope.album.id, $scope.album.coverForEdit).then(function (){
+                    $route.reload();
+                })
+            }, function () {
+                console.log('Modal dismissed at: ' + new Date());
+            });
+        };
 
     }]);

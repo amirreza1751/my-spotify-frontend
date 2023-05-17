@@ -41,6 +41,17 @@ mySpotify.service('artistService', ['$http', function ($http){
         });
     }
 
+    this.deleteArtist = function (id) {
+        let url = "http://localhost:8080/api/artists/"+id;
+        return $http.delete(url)
+            .then(function successCallback(response) {
+                return response;
+            }, function errorCallback(response) {
+                console.log("An error occurred.", response)
+                alert("An error occurred.")
+            });
+    }
+
 
     this.updateArtistProfilePicture = function (artistId, profilePicture) {
         let uploadUrl = "http://localhost:8080/api/artists/" + artistId + "/profile-picture";
@@ -189,6 +200,23 @@ mySpotify.service('albumService', ['$http', function ($http){
 
     this.getSeconds = function (durationString){
         return parseInt(durationString.replace("S", "").split(" ")[1]);
+    }
+
+
+    this.updateAlbumCover = function (albumId, cover) {
+        let uploadUrl = "http://localhost:8080/api/albums/" + albumId + "/cover";
+        let fd = new FormData();
+        fd.append("file", cover)
+        fd.append("id", albumId)
+        return $http.put(uploadUrl, fd,{
+            transformRequest: angular.indentity,
+            headers: {'content-type': undefined, 'Process-Data': false}
+        }).then(function successCallback(response) {
+            return response;
+        }, function errorCallback(response) {
+            console.log("An error occurred.", response)
+            alert("An error occurred.")
+        });
     }
 
 }]);

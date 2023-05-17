@@ -1,12 +1,19 @@
 <div>
     <div class="row">
         <div class="col-sm-6">
-            <h1>New Artist</h1>
-            <form>
 
-                <div class="form-group">
-                    <div class="cropArea form-control">
-                        <ui-cropper image="myImage" area-type="square" result-image="myCroppedImage" result-image-size="'max'"></ui-cropper>
+            <h1>New Artist</h1>
+
+            <div class="form-group">
+                <label for="artistNameInput">Artist name</label>
+                <input type="text" class="form-control" id="artistNameInput" ng-model="artistNameInput" aria-describedby="someTips" placeholder="Enter name">
+                <small id="someTips" class="form-text text-muted">Enter the name of the artist.</small>
+            </div>
+        </div>
+        <div class="col-sm-6">
+                <div class="form-group text-center">
+                    <div class="cropArea form-control" style="width: 200px; height: 200px; display: inline-block; margin-top: 30px;">
+                        <ui-cropper image="myImage" area-type="square" result-image="myCroppedImage"></ui-cropper>
 
                         <!--                    <div>Cropped Image:</div>-->
                         <!--                    <div><img ng-src="{{myCroppedImage}}" /></div>-->
@@ -18,17 +25,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="artistNameInput">Artist name</label>
-                    <input type="text" class="form-control" id="artistNameInput" ng-model="artistNameInput" aria-describedby="someTips" placeholder="Enter name">
-                    <small id="someTips" class="form-text text-muted">Enter the name of the artist.</small>
-                </div>
-
-
-
-                <div class="form-group">
                     <button type="submit" class="btn btn-primary" ng-click="onCreate()">Submit</button>
                 </div>
-            </form>
         </div>
     </div>
 </div>

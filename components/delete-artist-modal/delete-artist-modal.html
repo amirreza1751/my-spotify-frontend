@@ -1,0 +1,18 @@
+<div class="modal-body">
+    <button type="button" class="close" aria-label="Close" ng-click="$ctrl.handleDismiss()"><span aria-hidden="true">&times;</span></button>
+
+    <h3>Delete Artist</h3>
+    <hr>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 text-center">
+            <div class="form-group">
+                <h4> Are you sure?</h4>
+            </div>
+                <div class="form-group">
+                    <button class="btn btn-danger" type="button" ng-click="$ctrl.handleDismiss()">No</button>
+                    <input type="submit" autofocus class="btn btn-success" ng-click="$ctrl.handleClose()" value="Yes">
+                </div>
+
+        </div>
+    </div>
+</div>

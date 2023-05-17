@@ -11,6 +11,7 @@ mySpotify.directive('albumDetail', function () {
             dt: "=",
             onUpdate: "&",
             openAddTrackModal: "&",
+            openUpdateAlbumCoverModal: "&",
             albumTitleEditInput: "=",
             albumArtistSelectedEdit: "=",
             albumGenreSelectedEdit: "=",

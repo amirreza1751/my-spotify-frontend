@@ -12,10 +12,9 @@
 </script>
 
 <div>
-    <div class="row">
+    <div class="row panel panel-default">
         <div class="col-sm-6">
             <h1 class="test-class">New Album</h1>
-            <form>
                 <div class="form-group">
                     <label class="form-label">Album Title:</label>
                     <input type="text" class="form-control" ng-model="albumTitleInput" placeholder="Album Title ...">
@@ -41,23 +40,21 @@
 
                     </date-picker>
                 </div>
-
-                <div class="form-group">
-                    <div class="cropArea">
-                        <ui-cropper image="myImage" area-type="square" result-image="myCroppedImage" result-image-size="'max'"></ui-cropper>
-                    </div>
-                    <label class="form-label" for="fileInput">Album Cover</label>
-                    <input type="file" class="form-control" id="fileInput">
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group text-center">
+                <div class="cropArea" style="width: 200px; height: 200px; display: inline-block; margin-top: 30px;">
+                    <ui-cropper image="myImage" area-type="square" result-image="myCroppedImage" ></ui-cropper>
                 </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="fileInput">Album Cover</label>
+                <input type="file" class="form-control" id="fileInput">
+            </div>
 
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary" ng-click="onCreate()">Submit</button>
-                </div>
-
-
-
-
-            </form>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" ng-click="onCreate()">Submit</button>
+            </div>
         </div>
     </div>
 </div>
