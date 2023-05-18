@@ -1,4 +1,4 @@
-var mySpotify = angular.module('mySpotify', ['ngRoute', 'ngResource', 'ui.bootstrap','ngAnimate', 'ngSanitize', 'uiCropper', 'angularFileUpload']);
+var mySpotify = angular.module('mySpotify', ['ngRoute', 'ngResource', 'ui.bootstrap','ngAnimate', 'ngSanitize', 'uiCropper', 'angularFileUpload', 'ngToast']);
 
 mySpotify.filter('startFrom', function() {
     return function(input, start) {
@@ -9,3 +9,8 @@ mySpotify.filter('startFrom', function() {
         return [];
     };
 });
+mySpotify.config(['ngToastProvider', function(ngToast) {
+    ngToast.configure({
+        verticalPosition: 'bottom',
+    });
+}]);

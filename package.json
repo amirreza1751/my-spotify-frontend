@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "ng-toast": "^2.0.0",
+    "ngtoast": "^2.0.1"
+  }
+}

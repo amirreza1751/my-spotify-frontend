@@ -3,9 +3,9 @@ mySpotify.config(function ($routeProvider) {
 
     $routeProvider
         .when('/', {
-            templateUrl: 'pages/home.html',
-            controller: 'homeController'
-        })
+                    template: '<home-component></home-component>',
+                    controller: 'homeController'
+                })
 
 
 

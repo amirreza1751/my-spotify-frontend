@@ -35,6 +35,11 @@
     <script src="components/update-artist-picture-modal/update-artist-picture-modal.js"></script>
     <script src="components/update-album-cover-modal/update-album-cover-modal.js"></script>
     <script src="components/delete-artist-modal/delete-artist-modal.js"></script>
+    <script src="components/home-component/home-component.js"></script>
+
+    <script src="node_modules/ng-toast/dist/ngToast.min.js"></script>
+    <link rel="stylesheet" href="node_modules/ng-toast/dist/ngToast.min.css">
+    <link rel="stylesheet" href="node_modules/ng-toast/dist/ngToast-animations.min.css">
     <title>My Spotify</title>
 </head>
 <body>
@@ -52,7 +57,7 @@
         </nav>
 
     </header>
-
+    <toast></toast>
     <div class="row" >
         <div class="col-md-2" style="background-color: #342e2e;">
             <ul class="nav nav-stacked nav-pills">
@@ -62,7 +67,9 @@
             </ul>
         </div>
         <div class="container" style="padding-top: 50px">
-            <div class="col-md-9 col-md-offset-1" ng-view></div>
+            <div class="col-md-9 col-md-offset-1" ng-view>
+
+            </div>
         </div>
     </div>
 
